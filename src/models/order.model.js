@@ -9,7 +9,7 @@ const orderSchema = new Schema({
         }
     ],
     total: {type: Number},
-    status: {type: String, enum: ['paymentPending','paid', 'shipped', 'delivered']},
+    status: {type: String, enum: ['paymentPending','paid','failed', 'shipped', 'delivered']},
     paymentId : {type: Schema.Types.ObjectId, ref: 'Payment' },
 
 },{timestamps : true})

@@ -10,10 +10,18 @@ export const createCart = async(req , res) =>{
                 message : "Please provide book id and quantity"
             })
         }
+
+        console.log(bookId);
+        
         const cart = await Cart.create({
             userId ,
-            bookId ,
-            quantity
+            orderItems :[
+                {
+                    bookId ,
+                    quantity
+                }
+            ]
+            
         })
 
         if(!cart){
@@ -50,7 +58,7 @@ export const getCart = async(req , res) =>{
             })
         }
 
-        const cart = await Cart.find({userId}).populate("bookId", "title price");
+        const cart = await Cart.find({userId}).populate("orderItems.bookId", "title price");
 
         if(!cart){
             return res.status(404).json({
@@ -110,7 +118,7 @@ export const deleteCart = async (req,res) =>{
 
 }
 
-export const updateCart = async (req,res) =>{
+export const addToCart = async (req,res) =>{
     try {
         const {id} = req.params;
         const {bookId ,quantity} = req.body;
@@ -121,13 +129,35 @@ export const updateCart = async (req,res) =>{
             })
         }
 
-        const cart = await Cart.findByIdAndUpdate(id , {bookId , quantity} , {new : true});
+        let cart = await Cart.findById(id);
         if(!cart){
-            return res.status(404).json({
-                success : false ,
-                message : "Cart not found"
+            console.log("cart yes");
+            
+            cart = await Cart.create({
+                userId : req.user._id ,
+                orderItems : [{
+                    bookId ,
+                    quantity
+                }]
             })
+        }else {
+            console.log("cart no");
+            const existingOrderItem = cart.orderItems.find(item => {
+               
+                
+                return item.bookId.toString() === bookId;
+            });
+            if(existingOrderItem){
+                existingOrderItem.quantity += quantity
+            }else{
+                cart.orderItems.push({
+                    bookId ,
+                    quantity
+                })
+            }
+            cart.save();
         }
+
 
         return res.status(200).json({
             success : true ,
@@ -136,9 +166,11 @@ export const updateCart = async (req,res) =>{
         })
         
     } catch (error) {
+        console.log(error);
+        
         return res.status(500).json({
             success : false ,
-            message : "Internal server error while updating cart"
+            message : "Internal server error while adding to cart"
         })
         
     }
@@ -162,7 +194,7 @@ export const getCartDetails = async (req,res) =>{
             })
         }
 
-        const cart = await Cart.findById({_id :id}).populate("bookId");
+        const cart = await Cart.findById({_id :id}).populate("orderItems.bookId");
 
         if(!cart){
             return res.status(404).json({
@@ -184,6 +216,58 @@ export const getCartDetails = async (req,res) =>{
         return res.status(500).json({
             success : false ,
             message : "Internal server error while retrieving cart"
+        })
+        
+    }
+
+}
+
+export const deleteFromCart = async (req,res) =>{
+    try {
+       
+        const id = req.params.id;
+        const {bookId} = req.body;
+        if(!id || !bookId){
+            return res.status(400).json({
+                success : false ,
+                message : "Invalid cart id or book id"
+            })
+        }
+
+        const cart = await Cart.findById({_id :id});
+        if(!cart){
+            return res.status(400).json({
+                success : false ,
+                message : "Could not find cart"
+            })
+        }
+        const existingOrderItem = cart.orderItems.find(item => item.bookId.toString() === bookId);
+        console.log(existingOrderItem);
+        
+
+            if(existingOrderItem.quantity>1 ){
+                existingOrderItem.quantity = existingOrderItem.quantity-1
+                
+            }else{
+                cart.orderItems = cart.orderItems.filter(item => item.bookId.toString() !== bookId);
+                
+            }
+            cart.save();
+
+            return res.status(200).json({
+                success : true ,
+                message : "Book removed from cart",
+                cart 
+            })
+
+
+
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success : false ,
+            message : "Internal server error while deleting from cart"
         })
         
     }

@@ -208,19 +208,86 @@ export const getBook = async (req, res) =>{
 
 export const getAllBooks = async (req, res) =>{
     try {
-        const books = await Book.find().populate("addedBy","name");
+        const {genre , author, title, page, limit,sort,search} = req.query;
+        let books = await Book.find().populate("addedBy","name");
         if(!books){
             return res.status(404).json({
                 success : false,
+                message: "Books found and filtered",
+                total: books.length,
                 message : "No books found",
             })
         }
 
-        return res.status(200).json({
-            success : true,
-            data : books
-        })
+        if(!genre && !author && !title && !page && !limit && !sort && !search){
+            return res.status(200).json({
+                success : true,
+                data : books
+            })
+        }
 
+        if (genre) {
+            books = books.filter(book => book.genre.toLowerCase() === genre.toLowerCase());
+        }
+
+        if (author) {
+             books = books.filter(book => book.author.toLowerCase() === author.toLowerCase());
+        }
+
+        if (title) {
+            books = books.filter(book => book.title.toLowerCase() === title.toLowerCase());
+        }
+
+
+        
+        if (sort) {
+            if (sort === "ascGen") {
+                books.sort((a, b) => a.genre.localeCompare(b.genre));
+            } else if (sort === "descGen") {
+                books.sort((a, b) => b.genre.localeCompare(a.genre));
+            } else if (sort === "ascAuth") {
+                books.sort((a, b) => a.author.localeCompare(b.author));
+            } else if (sort === "descAuth") {
+                books.sort((a, b) => b.author.localeCompare(a.author));
+            } else if (sort === "ascTit") {
+                books.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (sort === "descTit") {
+                books.sort((a, b) => b.title.localeCompare(a.title));
+            } else if (sort === "ascPri") {
+                books.sort((a, b) => a.price - b.price);
+            } else if (sort === "descPri") {
+                books.sort((a, b) => b.price - a.price);
+            }
+        }
+
+        if(search){
+            books = books.filter(book => book.title.toLowerCase().includes(search.toLowerCase()));
+        }
+
+        if(page && limit){
+            const startIndex = (parseInt(page) - 1) * parseInt(limit);
+            const endIndex = parseInt(page) * parseInt(limit);
+            books = books.slice(startIndex, endIndex);
+        }
+            
+        
+
+        
+
+         return res.status(200).json({
+            success: true,
+            message: "Books found and filtered",
+            total: books.length,
+            data: books,
+        });
+
+
+
+
+
+
+
+        
         
     } catch (error) {
         console.error(error)
