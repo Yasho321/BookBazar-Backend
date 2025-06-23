@@ -173,7 +173,7 @@ cover: [file upload]
 ```
 
 ### Create Order
--POST /api/v1/orders/
+- POST /api/v1/orders/
 - Authorization: Api-Key YOUR_API_KEY
 ```json
 
@@ -189,8 +189,8 @@ cover: [file upload]
 ```
 
 ### Add Review
--POST /api/v1/reviews/:bookId
--Authorization: Api-Key YOUR_API_KEY
+- POST /api/v1/reviews/:bookId
+- Authorization: Api-Key YOUR_API_KEY
 ```json
 
 {
