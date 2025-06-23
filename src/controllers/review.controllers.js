@@ -59,13 +59,24 @@ export const deleteReview = async (req, res) =>{
             })
         }
 
-        const review = await Review.findByIdAndDelete(id);
+        const review = await Review.findById(id);
+        
         if(!review){
             return res.status(400).json({
                 success : false ,
                 message : 'Review not found'
             })
         }
+        if(review.userId.toString() !== req.user._id.toString()){
+            return res.status(400).json({
+                success : false ,
+                message : 'You are not authorized to delete this review'
+            })
+        }
+
+        await review.deleteOne();
+
+        
 
         return res.status(200).json({
             success : true ,
