@@ -134,7 +134,6 @@ To get an API key:
 
 ### User Registration
 - POST /api/v1/auth-and-api/register
-- (needs your mailtraps credentials to use this as it is built on demo account which allows sending testing emails only to your email address in this case mine , if you don't have one you can login with example credentials given after this in user login section)
 ```json
 
 {
@@ -146,7 +145,6 @@ To get an API key:
 
 ### User Login
 - POST /api/v1/auth-and-api/login
-- (USE THIS IF YOU DON'T HAVE A MAIL SERVICE CREDENTIALS)
 ```json
 
 {
@@ -282,7 +280,7 @@ Example: `GET /api/v1/books/?genre=Classic&author=George Orwell&sort=descPri`
 
 1. **Start the server** (assumed to be running on `localhost:8080`)
 2. **Import the Postman collection** from the provided Documentation
-3. **Register a new user** using the registration endpoint (used demo service which do not send emails to other as of now to test you can login via credentials given in user login section)
+3. **Register a new user** using the registration endpoint 
 4. **Generate an API key** for authenticated requests
 5. **Start making API calls** using the generated API key
 

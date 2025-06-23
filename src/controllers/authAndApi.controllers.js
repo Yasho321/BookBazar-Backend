@@ -56,23 +56,37 @@ export const register = async (req, res) =>{
         await newUser.save();
 
         const transport = nodemailer.createTransport({
-            host : process.env.MAILTRAP_HOST ,
-            port : process.env.MAILTRAP_PORT ,
+            host : process.env.RESEND_HOST ,
+            port : process.env.RESEND_PORT ,
             secure : false ,
             auth : {
-                user : process.env.MAILTRAP_USERNAME ,
-                pass : process.env.MAILTRAP_PASSWORD ,
+                user : process.env.RESEND_USERNAME ,
+                pass : process.env.RESEND_PASSWORD ,
             } 
         })
+       
+        
 
         const mailOption = {
-            from : process.env.MAILTRAP_SENDERMAIL ,
+            from : process.env.RESEND_SENDERMAIL ,
             to : email ,
             subject : "Verify your email",
             text : `Please click on this link to verify your email http://localhost:8080/api/v1/auth-and-api/verify/${verificationToken}`
         }
+         
 
-        await transport.sendMail(mailOption);
+
+       const sent = await transport.sendMail(mailOption);
+
+       if(!sent){
+        return res.status(400).json({
+            success : false ,
+            message : "Failed to send email"
+        })
+        
+       }
+
+        
 
 
         return res.status(201).json({
