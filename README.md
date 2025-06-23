@@ -83,8 +83,7 @@ POST   /api/v1/books/                    # Add new book
 PUT    /api/v1/books/:id                 # Update book
 DELETE /api/v1/books/:id                 # Delete book
 GET    /api/v1/books/:id                 # Get single book
-GET    /api/v1/books/                    # Get all books (with filters , search , sorting and pagination  )
-quaries for getting all books (should be attached with the req :- GET    /api/v1/books/) :- genre , author, title, page, limit,sort,search .
+GET    /api/v1/books/                    # Get all books 
 ```
 
 ### Reviews
