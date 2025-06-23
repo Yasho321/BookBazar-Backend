@@ -1,7 +1,7 @@
 # Bookstore API
 
 A comprehensive RESTful API for managing an online bookstore with user authentication, book inventory, shopping cart, reviews, and order management.
-(Deployed at :- [Visit](https://bookbazar-backend.onrender.com) )
+(Deployed at :- [https://bookbazar-backend.onrender.com](https://bookbazar-backend.onrender.com) )
 
 
 ## 🚀 Features
