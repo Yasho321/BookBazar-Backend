@@ -133,8 +133,8 @@ To get an API key:
 ## 📝 Request Examples
 
 ### User Registration
-POST /api/v1/auth-and-api/register
-(needs your mailtraps credentials to use this as it is built on demo account which allows sending testing emails only to your email address in this case mine , if you don't have one you can login with example credentials given after this in user login section)
+- POST /api/v1/auth-and-api/register
+- (needs your mailtraps credentials to use this as it is built on demo account which allows sending testing emails only to your email address in this case mine , if you don't have one you can login with example credentials given after this in user login section)
 ```json
 
 {
@@ -145,8 +145,8 @@ POST /api/v1/auth-and-api/register
 ```
 
 ### User Login
-POST /api/v1/auth-and-api/login
-(USE THIS IF YOU DON'T HAVE A MAIL SERVICE CREDENTIALS)
+- POST /api/v1/auth-and-api/login
+- (USE THIS IF YOU DON'T HAVE A MAIL SERVICE CREDENTIALS)
 ```json
 
 {
@@ -176,8 +176,8 @@ cover: [file upload]
 ```
 
 ### Create Order
-POST /api/v1/orders/
-Authorization: Api-Key YOUR_API_KEY
+-POST /api/v1/orders/
+- Authorization: Api-Key YOUR_API_KEY
 ```json
 
 {
@@ -192,8 +192,8 @@ Authorization: Api-Key YOUR_API_KEY
 ```
 
 ### Add Review
-POST /api/v1/reviews/:bookId
-Authorization: Api-Key YOUR_API_KEY
+-POST /api/v1/reviews/:bookId
+-Authorization: Api-Key YOUR_API_KEY
 ```json
 
 {
@@ -214,8 +214,8 @@ The API integrates with Razorpay for secure payment processing. The payment flow
 4. Verify payment completion using the payment verify endpoint
 
 ### Create Payment Order
-POST /api/v1/payments/create
-Authorization: Api-Key YOUR_API_KEY
+- POST /api/v1/payments/create
+- Authorization: Api-Key YOUR_API_KEY
 ```json
 
 {
@@ -234,8 +234,8 @@ Authorization: Api-Key YOUR_API_KEY
 ```
 
 ### Verify Payment
-POST /api/v1/payments/verify
-Authorization: Api-Key YOUR_API_KEY
+- POST /api/v1/payments/verify
+- Authorization: Api-Key YOUR_API_KEY
 ```json
 
 {
