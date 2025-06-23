@@ -1,6 +1,8 @@
 # Bookstore API
 
 A comprehensive RESTful API for managing an online bookstore with user authentication, book inventory, shopping cart, reviews, and order management.
+(Deployed at :- [Visit](https://bookbazar-backend.onrender.com) )
+
 
 ## 🚀 Features
 
@@ -277,8 +279,8 @@ Example: `GET /api/v1/books/?genre=Classic&author=George Orwell&sort=descPri`
 
 ## 🚦 Getting Started
 
-1. **Start the server** (assumed to be running on `localhost:8080`)
-2. **Import the Postman collection** from the provided Documentation
+1. **Get the server Link** ( running on `(https://bookbazar-backend.onrender.com)`)
+2. **Import the API collection to Postman** from the provided Documentation
 3. **Register a new user** using the registration endpoint 
 4. **Generate an API key** for authenticated requests
 5. **Start making API calls** using the generated API key
